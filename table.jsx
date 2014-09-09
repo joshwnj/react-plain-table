@@ -26,7 +26,8 @@ module.exports = React.createClass({
   propTypes: {
     rowIdKey: React.PropTypes.string.isRequired,
     schema: React.PropTypes.array.isRequired,
-    rows: React.PropTypes.array
+    rows: React.PropTypes.array,
+    onHeadingClick: React.PropTypes.func
   },
 
   getDefaultProps: function () {
@@ -35,13 +36,22 @@ module.exports = React.createClass({
     };
   },
 
+  onHeadingClick: function (event) {
+    var elem = event.target;
+    var key = elem.getAttribute('data-key');
+
+    if (this.props.onHeadingClick) {
+      this.props.onHeadingClick(key);
+    }
+  },
+
   // ----
 
   renderColumn: function (item) {
     var label = item.label;
     if (!label) { label = createLabel(item.key) };
 
-    return <th key={item.key}>{label}</th>;
+    return <th key={item.key} data-key={item.key} onClick={this.onHeadingClick}>{label}</th>;
   },
 
   renderRow: function (item) {
@@ -54,7 +64,7 @@ module.exports = React.createClass({
     });
 
     return (
-      <tr key={rowKey}>
+      <tr key={'row-' + rowKey}>
         {cells}
       </tr>
     );

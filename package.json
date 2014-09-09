@@ -1,0 +1,36 @@
+{
+  "name": "react-plain-table",
+  "version": "0.1.0",
+  "description": "General-purpose table presentation component for React.",
+  "main": "table.jsx",
+  "scripts": {
+    "test": "node tests/index.js"
+  },
+  "keywords": [
+    "react",
+    "table"
+  ],
+  "author": "joshwnj",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^0.11.1"
+  },
+  "devDependencies": {
+    "jsdom": "~0.10.5",
+    "node-jsx": "^0.11.0",
+    "react-addons": "^0.9.0",
+    "react-tools": "^0.11.1",
+    "tape": "^2.14.0"
+  },
+  "browserify": {
+    "transform": [
+      [
+        "reactify"
+      ]
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/joshwnj/react-plain-table.git"
+  }
+}

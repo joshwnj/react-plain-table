@@ -55,32 +55,39 @@ tape('Table: render rows', function (t) {
 });
 
 tape('Table: heading labels', function (t) {
+  t.plan(3);
   setupDom();
 
   var schema = [
-    { key: 'id', label: 'ID' },
-    { key: 'name_of_thing' }
+    { key: 'type_of_thing' },
+    { key: 'legs', label: 'Number of Legs' }
   ];
 
   var rows = [
-    { id: 1, name_of_thing: 'foo' },
-    { id: 2, name_of_thing: 'bar' }
+    { type_of_thing: 'dog', legs: 4 },
+    { type_of_thing: 'cat', legs: 4 },
+    { type_of_thing: 'ant', legs: 6 }
   ];
 
+  var handleClick = function (columnKey) {
+    t.equal(columnKey, 'legs', 'Key of clicked column is sent to the callback');
+  };
+
   var component = TestUtils.renderIntoDocument(
-    <Table rows={rows} rowIdKey="id" schema={schema} />
+    <Table rows={rows} rowIdKey="type_of_thing" schema={schema} onHeadingClick={handleClick} />
   );
 
   var headingElems = component.getDOMNode().querySelectorAll('table thead th');
   t.equal(
     headingElems[0].innerHTML,
-    'ID',
-    'Use the label when provided');
+    'type of thing',
+    'Guess the label (based on key) when not provided.');
 
   t.equal(
     headingElems[1].innerHTML,
-    'name of thing',
-    'Guess the label (based on key) when not provided.');
+    'Number of Legs',
+    'Use the label when provided');
 
-  t.end();
+  // click the 'legs' column heading
+  TestUtils.Simulate.click(headingElems[1]);
 });
